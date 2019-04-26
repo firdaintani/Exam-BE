@@ -15,12 +15,19 @@ module.exports={
         })
     },
     addMovCat : (req,res)=>{
-        var sql = `insert into movcat set ?`
-        db.query(sql,req.body, (err,result)=>{
+        var sql = `select * from movcat where idmovie=${req.body.idmovie} and idcategory=${req.body.idcategory}`
+        db.query(sql, (err,result)=>{
             try{
-                if(err) throw err
-                res.redirect('/movcat/all')
-            }
+                if(result.length>0){
+                    res.send('Data sudah ada')
+                }else{
+                    var sql1 = `insert into movcat set ?`
+                    db.query(sql1,req.body, (err1,result1)=>{
+                            if(err1) throw err1
+                            res.redirect('/movcat/all')
+                    })    
+                }
+            }        
             catch(err){
                 res.send(err)
             }
