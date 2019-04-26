@@ -27,7 +27,6 @@ module.exports={
                         res.redirect('/movie/all')
                         
                     })
-    
                 }
         
             }
