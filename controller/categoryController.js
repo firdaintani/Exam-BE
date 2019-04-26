@@ -14,15 +14,29 @@ module.exports={
         })
     },
     addCategories : (req,res)=>{
-        var sql = `insert into categories set ?`
-        db.query(sql,req.body, (err,result)=>{
+        var sql = `select nama from categories where nama='${req.body.nama}'`
+        db.query (sql, (err,result)=>{
             try{
-                if(err) throw err
-                res.redirect('/categories/all')
+                if(result.length>0){
+                    res.send('kategori sudah ada')
+                
+                }else{
+
+                    var sql1 = `insert into categories set ?`
+                    db.query(sql1,req.body, (err1,result)=>{
+                        
+                        if(err1) throw err1
+                        res.redirect('/categories/all')
+                        
+                    })
+    
+                }
+        
             }
             catch(err){
                 res.send(err)
             }
+
         })
     },
     editCategories : (req,res)=>{
