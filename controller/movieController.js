@@ -14,15 +14,27 @@ module.exports={
         })
     },
     addMovie : (req,res)=>{
-        var sql = `insert into movies set ?`
-        db.query(sql,req.body, (err,result)=>{
+        var sql = `select nama from movies where nama='${req.body.nama}'`
+        db.query (sql, (err,result)=>{
             try{
-                if(err) throw err
-                res.redirect('/movie/all')
+                if(result.length>0){
+                    res.send('movie sudah ada')
+                }else{
+                    var sql1 = `insert into movies set ?`
+                    db.query(sql1,req.body, (err1,result)=>{
+                        
+                        if(err1) throw err1
+                        res.redirect('/movie/all')
+                        
+                    })
+    
+                }
+        
             }
             catch(err){
                 res.send(err)
             }
+
         })
     },
     editMovie : (req,res)=>{

@@ -19,9 +19,7 @@ module.exports={
             try{
                 if(result.length>0){
                     res.send('kategori sudah ada')
-                
                 }else{
-
                     var sql1 = `insert into categories set ?`
                     db.query(sql1,req.body, (err1,result)=>{
                         
